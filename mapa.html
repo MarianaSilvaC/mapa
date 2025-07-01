@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa de Sedes</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Estilos de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Mapa de Sedes</h2>
+    <div id="map"></div>
+
+    <!-- Script de Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inicializa el mapa
+        var map = L.map('map').setView([27.6536, -110.2520], 7); // Coordenadas de Sonora
+
+        // Capa de mapa base
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Lista de sedes
+        var sedes = [
+            {
+                nombre: "Agencia Fiscal Agua Prieta",
+                lat: 31.328555,
+                lon: -109.559395,
+                direccion:  `
+                    Calle 6 y Avenida 4 S/N, C.P. 84210, AGUA PRIETA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6333381299</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efaguaprieta@haciendasonora.gob.mx">efaguaprieta@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal de Caborca",
+                lat: 30.7134094,
+                lon: -112.1500844,
+                direccion:  `
+                    Calle Sexta y Avenida R S/N, C.P. 83600, CABORCA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6373720356</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efcaborca@haciendasonora.gob.mx">efcaborca@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Cananea",
+                lat: 30.9868210,
+                lon: -110.2953583,
+                direccion:  `
+                    Calle 9 y Callejón Bravo, C.P. 84623, CANANEA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6451012172</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efcananea@haciendasonora.gob.mx">efcananea@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Cd. Obregón",
+                lat: 27.4973157,
+                lon: -109.9326351,
+                direccion:  `
+                    5 de Febrero S/N, C.P. 85000, CAJEME, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6444122359</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efobregon@haciendasonora.gob.mx">efobregon@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Guaymas",
+                lat: 27.9258200,
+                lon: -110.9192830,
+                direccion:  `
+                    Aquiles Serdán 490, C.P. 85430, GUAYMAS, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6222225465</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efguaymas@haciendasonora.gob.mx">efguaymas@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Hermosillo",
+                lat: 29.0678922,
+                lon: -110.9574240,
+                direccion: `
+                    Comonfort y Avenida de la Cultura S/N, C.P. 83270, HERMOSILLO, SONORA. (Centro de Gobierno)<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6624920266</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efhermosillo@haciendasonora.gob.mx">efhermosillo@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Huatabampo",
+                lat: 26.8270532,
+                lon: -109.6445471,
+                direccion: `
+                    No Reelección 21, C.P. 85900, HUATABAMPO, SONORA<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6474260649</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efhuatabampo@haciendasonora.gob.mx">efhuatabampo@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Huepac",
+                lat:  29.9116538,
+                lon: -110.2147686,
+                direccion: `
+                    Av. Gral, Padilla y C. Morelos S/N, C.P. 84860, HUÉPAC, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6232315330</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efhuepac@haciendasonora.gob.mx">efhuepac@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Magdalena",
+                lat:  30.5444200,
+                lon: -111.1213017,
+                direccion: `
+                    Ignacio Allende 1388, C.P. 84160, MAGDALENA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6323223552</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efmagdalena@haciendasonora.gob.mx">efmagdalena@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Moctezuma",
+                lat:  29.8035606,
+                lon: -109.6805263,
+                direccion: `
+                    Calle Ignacio Pesqueira S/N, C.P. 84565, MOCTEZUMA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6342431037</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efmoctezuma@haciendasonora.gob.mx">efmoctezuma@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Nacozari",
+                lat:  30.3747959,
+                lon: -109.6882993,
+                direccion: `
+                    Jesús García Sur S/N, C.P. 84340, NACOZARI DE GARCÍA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6343420587</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efnacozari@haciendasonora.gob.mx">efnacozari@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Navojoa",
+                lat:  27.0825699,
+                lon: -109.4477212,
+                direccion: `
+                    José María Morelos y Pavón 117-A, C.P. 85800, NAVOJOA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6424224084</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efnavojoa@haciendasonora.gob.mx">efnavojoa@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Nogales",
+                lat:  31.3317919,
+                lon: -110.9468937,
+                direccion: `
+                    Campillo 140, C.P. 84094, NOGALES, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6313120219</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efsubnogales@haciendasonora.gob.mx">efsubnogales@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Puerto Peñasco",
+                lat:  31.3256516,
+                lon: -113.5440445,
+                direccion: `
+                    Av. Luis Encinas S/N, C.P. 83555, PUERTO PEÑASCO, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6383831148</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efpenasco@haciendasonora.gob.mx">efpenasco@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Sahuaripa",
+                lat:  29.0552975,
+                lon: -109.2342710,
+                direccion: `
+                    Prof. Rafael V. Meneses S/N, C.P. 85600, SAHUARIPA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6343431059</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efsahuaripa@haciendasonora.gob.mx">efsahuaripa@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal San Luis Río Colorado",
+                lat:  32.4786144,
+                lon: -114.7801566,
+                direccion: `
+                    Av. Miguel Hidalgo S/N, C.P. 83449, SAN LUIS RÍO COLORADO, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6535341509</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="mailto:efsanluis@haciendasonora.gob.mx">efsanluis@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Agencia Fiscal Ures",
+                lat:  29.4282049,
+                lon: -110.3906143,
+                direccion: `
+                    Av. Ignacio Zaragoza S/N, C.P. 84900, URES, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6232320050</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efures@haciendasonora.gob.mx">efures@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal California Cd. Obregón",
+                lat:  27.5027521,
+                lon: -109.9455822,
+                direccion: `
+                    California Norte 440, C.P. 85110, CAJEME, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6444147687</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efcalifornia@haciendasonora.gob.mx">efcalifornia@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal CUM",
+                lat:  29.1092949,
+                lon: -110.9938860,
+                direccion: `
+                    Av. Perimetral Norte 731, C.P. 83170, HERMOSILLO, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6622366436</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efcum@haciendasonora.gob.mx">efcum@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Empalme",
+                lat:  27.9577043,
+                lon: -110.8150041,
+                direccion: `
+                    Avenida Revolución 3, C.P. 85330, EMPALME, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6221130174</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efempalme@haciendasonora.gob.mx">efempalme@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Navojoa",
+                lat:  27.0734756,
+                lon: -109.4230664,
+                direccion: `
+                    Lázaro Cárdenas del Río S/N, C.P. 85890, NAVOJOA, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6424210057</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efsubnavojoa@haciendasonora.gob.mx">efsubnavojoa@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Nogales Puerta del Sur",
+                lat:  31.2567526,
+                lon: -110.9574080,
+                direccion: `
+                    Calz. Industrial 1, C.P. 84094, NOGALES, SONORA <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6313208042</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efsubnogales@haciendasonora.gob.mx">efsubnogales@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Parque Industrial",
+                lat:  29.0148208,
+                lon: -110.9244704,
+                direccion: `
+                    Carretera La Colorada km 3.5 y Blvr. Calesa L28, C.P. 83299, HERMOSILLO, SONORA. (Plaza Futura) <br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6222510474</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efindustrial@haciendasonora.gob.mx">efindustrial@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Poblado Miguel Alemán",
+                lat:   28.8397304,
+                lon: -111.4910173,
+                direccion: `
+                    Primero de Junio S/N, C.P. 83346, HERMOSILLO, SONORA<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6621580302</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efmaleman@haciendasonora.gob.mx">efmaleman@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Santa Ana",
+                lat:  30.5444200,
+                lon: -111.1213017,
+                direccion: `
+                    Ignacio Zaragoza y Serna S/N, C.P. 84600, SANTA ANA, SONORA. (Local 9)<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6413243041</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efsantaana@haciendasonora.gob.mx">efsantaana@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Sonoyta",
+                lat:  31.8674260,
+                lon: -112.8572059,
+                direccion: `
+                    Av. Altar 232, C.P. 83570, GENERAL PLUTARCO ELÍAS CALLES, SONORA<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6515121259</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efsonoyta@haciendasonora.gob.mx">efsonoyta@haciendasonora.gob.mx</a>
+                `
+            },
+            {
+                nombre: "Sub Agencia Fiscal Vicam",
+                lat:  27.6435039,
+                lon: -110.2946556,
+                direccion: `
+                    Lázaro Cárdenas del Río 855, C.P. 85510, GUAYMAS, SONORA<br><br>
+                    <strong>Horarios:</strong>
+                    <table>
+                        <tr><th>Día</th><th>Horario</th></tr>
+                        <tr><td>Lunes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Martes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Miércoles</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Jueves</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Viernes</td><td>08:00 - 15:00</td></tr>
+                        <tr><td>Sábado</td><td>Cerrado</td></tr>
+                        <tr><td>Domingo</td><td>Cerrado</td></tr>
+                    </table><br>
+                    <strong>Teléfonos:</strong>
+                    <table>
+                        <tr><th>Número</th><th>Extensión</th></tr>
+                        <tr><td>6434380048</td><td>N/A</td></tr>
+                    </table><br>
+                    <strong>Correo Electrónico:</strong><br>
+                    <a href="efvicam@haciendasonora.gob.mx">efvicam@haciendasonora.gob.mx</a>
+                `
+            },
+
+            
+        ];
+
+        // Agrega los marcadores al mapa
+        sedes.forEach(function(sede) {
+            var marcador = L.marker([sede.lat, sede.lon]).addTo(map);
+            marcador.bindPopup(`<b>${sede.nombre}</b><br>${sede.direccion}`);
+        });
+    </script>
+
+</body>
+</html>
